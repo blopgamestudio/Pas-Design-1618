@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAS DESIGN 1.618</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+    :root{
+      --navy:#123b72;
+      --navy-2:#1d4f8d;
+      --sky:#86a8d7;
+      --sky-2:#dce8f8;
+      --line:#d7e0ee;
+      --red:#df4b4b;
+      --text:#20334d;
+      --muted:#6c7f97;
+      --white:#ffffff;
+      --bg:#f7f9fc;
+      --shadow:0 18px 45px rgba(18,59,114,0.08);
+      --shadow-soft:0 10px 25px rgba(18,59,114,0.06);
+      --radius:22px;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      min-width:0;
+    }
+
+    html,body{min-height:100%}
+
+    body{
+      font-family:"Inter",sans-serif;
+      color:var(--text);
+      background:
+        linear-gradient(180deg, rgba(18,59,114,0.035), rgba(18,59,114,0.02)),
+        repeating-linear-gradient(90deg, transparent 0 79px, rgba(18,59,114,0.035) 79px 80px),
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(255,255,255,0.96);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(18,59,114,0.08);
+    }
+
+    .topbar-inner{
+      width:1440px;
+      max-width:calc(100% - 32px);
+      margin:0 auto;
+      min-height:86px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+
+    .brand{display:flex;align-items:center;gap:14px}
+
+    .brand-mark{
+      width:54px;height:54px;border:2px solid var(--navy);position:relative;flex-shrink:0;
+      background:
+        linear-gradient(90deg, transparent 49%, rgba(18,59,114,0.16) 50%, transparent 51%),
+        linear-gradient(transparent 49%, rgba(18,59,114,0.16) 50%, transparent 51%);
+    }
+
+    .brand-mark::before,
+    .brand-mark::after{
+      content:"";
+      position:absolute;
+      inset:8px;
+      border:1px solid rgba(18,59,114,0.75);
+    }
+
+    .brand-mark::after{
+      inset:4px 20px 4px 4px;
+      border-radius:120px 0 0 120px;
+    }
+
+    .brand-title{
+      font-family:"Montserrat",sans-serif;
+      font-weight:600;
+      letter-spacing:0.01em;
+      color:var(--navy);
+      font-size:20px;
+      line-height:1;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:0.16em;
+      margin-top:4px;
+    }
+
+    .nav{display:flex;gap:44px;flex-wrap:wrap;justify-content:flex-end}
+
+    .nav a{
+      text-decoration:none;
+      color:var(--navy);
+      font-family:"Montserrat",sans-serif;
+      font-size:14px;
+      letter-spacing:0.04em;
+      text-transform:uppercase;
+      position:relative;
+    }
+
+    .nav a.active::before{
+      content:"";
+      position:absolute;
+      left:-12px;
+      top:50%;
+      width:10px;
+      height:1px;
+      background:var(--red);
+      transform:translateY(-50%);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(90deg, rgba(10,39,80,0.93), rgba(18,59,114,0.9));
+      padding:92px 0 88px;
+      isolation:isolate;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 10% 30%, rgba(255,255,255,0.08), transparent 20%),
+        radial-gradient(circle at 85% 15%, rgba(134,168,215,0.25), transparent 16%),
+        linear-gradient(0deg, rgba(255,255,255,0.04), rgba(255,255,255,0.04)),
+        repeating-linear-gradient(90deg, transparent 0 119px, rgba(255,255,255,0.045) 119px 120px);
+      z-index:-2;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(135deg, transparent 0 60%, rgba(255,255,255,0.04) 60% 62%, transparent 62% 100%);
+      background-size:340px 340px;
+      opacity:0.65;
+      z-index:-1;
+    }
+
+    .hero-inner, .wrapper{
+      width:1440px;
+      max-width:calc(100% - 32px);
+      margin:0 auto;
+    }
+
+    .eyebrow{
+      font-size:13px;
+      letter-spacing:0.2em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,0.75);
+      margin-bottom:12px;
+    }
+
+    .hero h1{
+      font-family:"Montserrat",sans-serif;
+      font-weight:500;
+      font-size:clamp(40px,5vw,68px);
+      line-height:1.02;
+      color:#a6c2eb;
+      margin-bottom:8px;
+    }
+
+    .hero h1 span{
+      display:block;
+      color:#ffffff;
+      font-weight:700;
+      font-size:clamp(28px,3vw,46px);
+      margin-top:12px;
+    }
+
+    .hero p{
+      max-width:920px;
+      font-size:18px;
+      line-height:1.65;
+      color:rgba(255,255,255,0.82);
+      margin-top:18px;
+    }
+
+    .wrapper{
+      margin:36px auto 48px;
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+
+    .breadcrumb{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:13px;
+      color:#8b96a8;
+    }
+
+    .sep{opacity:0.6}
+
+    .grid-top{
+      display:grid;
+      grid-template-columns:minmax(0,1.08fr) minmax(0,0.92fr);
+      gap:24px;
+      align-items:start;
+    }
+
+    .panel{
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .panel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:linear-gradient(180deg, rgba(134,168,215,0.06), transparent 25%);
+    }
+
+    .panel-inner{position:relative;z-index:1;padding:24px}
+
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:20px;
+      margin-bottom:16px;
+      padding-bottom:14px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .section-head h2{
+      font-family:"Montserrat",sans-serif;
+      font-size:32px;
+      font-weight:700;
+      color:var(--navy);
+      line-height:1.1;
+      text-transform:uppercase;
+      letter-spacing:0.02em;
+    }
+
+    .section-head p{
+      max-width:420px;
+      color:var(--muted);
+      line-height:1.55;
+      font-size:14px;
+      text-align:right;
+    }
+
+    .campaign-box,.boss-box{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, #ffffff, #f8fbff);
+      border-radius:18px;
+      padding:16px 18px;
+      margin-bottom:14px;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .label-mini{
+      font-size:12px;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--sky);
+      margin-bottom:6px;
+    }
+
+    .campaign-title,.boss-title{
+      font-family:"Montserrat",sans-serif;
+      font-size:18px;
+      color:var(--navy);
+      font-weight:700;
+      line-height:1.3;
+    }
+
+    .progress-bar{
+      width:100%;
+      height:14px;
+      border-radius:999px;
+      overflow:hidden;
+      background:#eaf0f8;
+      margin:10px 0 8px;
+      border:1px solid #d9e4f4;
+    }
+
+    .progress-fill{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, var(--navy), var(--sky));
+      transition:width .2s ease;
+    }
+
+    .boss-fill{background:linear-gradient(90deg, var(--red), #e08686, var(--sky))}
+    .progress-text{font-size:13px;color:var(--muted)}
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin:18px 0;
+    }
+
+    .stat{
+      background:linear-gradient(180deg, #ffffff, #f8fbff);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      box-shadow:var(--shadow-soft);
+      min-height:104px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .stat span{
+      display:block;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .stat strong{
+      display:block;
+      font-family:"Montserrat",sans-serif;
+      font-size:30px;
+      color:var(--navy);
+      line-height:1;
+      margin-top:10px;
+      font-weight:800;
+    }
+
+    .main-button{
+      width:100%;
+      min-height:180px;
+      border:0;
+      border-radius:24px;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+      padding:28px;
+      text-align:left;
+      color:white;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.08), transparent 42%),
+        linear-gradient(135deg, #103665, #1c4f8c 52%, #7ea2d3);
+      box-shadow:0 24px 50px rgba(18,59,114,0.16);
+      transition:transform .14s ease, box-shadow .14s ease;
+      margin-bottom:14px;
+    }
+
+    .main-button:hover{transform:translateY(-2px);box-shadow:0 28px 56px rgba(18,59,114,0.22)}
+    .main-button:active{transform:translateY(1px)}
+
+    .main-button::before{
+      content:"";
+      position:absolute;
+      inset:-40% auto auto -10%;
+      width:300px;
+      height:300px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,0.16), transparent 70%);
+    }
+
+    .main-button-title{
+      position:relative;
+      z-index:1;
+      display:block;
+      font-family:"Montserrat",sans-serif;
+      font-size:38px;
+      line-height:1.05;
+      font-weight:800;
+      text-transform:uppercase;
+      max-width:520px;
+      letter-spacing:0.02em;
+    }
+
+    .main-button-sub{
+      position:relative;
+      z-index:1;
+      display:block;
+      margin-top:10px;
+      font-size:15px;
+      max-width:500px;
+      line-height:1.7;
+      color:rgba(255,255,255,0.86);
+    }
+
+    .log{
+      min-height:56px;
+      border-radius:18px;
+      background:#f7faff;
+      border:1px solid var(--line);
+      padding:14px 16px;
+      color:#50637d;
+      line-height:1.55;
+      margin-bottom:14px;
+    }
+
+    .footer-stats{
+      margin-top:8px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:linear-gradient(180deg, #ffffff, #f8fbff);
+      padding:14px 16px;
+      columns:2;
+      column-gap:28px;
+      color:#4d617a;
+      line-height:1.8;
+    }
+
+    .button-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    button{font-family:"Montserrat",sans-serif}
+
+    .secondary-btn,.buy-btn,.talent-btn{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#ffffff;
+      color:var(--navy);
+      cursor:pointer;
+      transition:all .18s ease;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .secondary-btn{
+      padding:12px 16px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:0.04em;
+      font-size:12px;
+    }
+
+    .secondary-btn:hover,.buy-btn:hover,.talent-btn:hover{
+      border-color:#b8cae4;
+      transform:translateY(-1px);
+      box-shadow:0 12px 26px rgba(18,59,114,0.1);
+    }
+
+    button:disabled{opacity:0.45;cursor:not-allowed;transform:none !important;box-shadow:none !important}
+
+    .two-col{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      gap:14px;
+      align-items:start;
+    }
+
+    .section-note{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+      margin-bottom:14px;
+    }
+
+    .scroll-area{
+      max-height:680px;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding-right:8px;
+      padding-bottom:8px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      scrollbar-color:#b7c9e2 transparent;
+    }
+
+    /* IMPORTANT : empêche Flexbox d'écraser les cartes pour toutes les faire tenir */
+    .scroll-area > *{
+      flex:0 0 auto;
+      flex-shrink:0;
+    }
+
+    .shop-item,.event-card,.achievement-card,.talent-card{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:linear-gradient(180deg, #ffffff, #fbfdff);
+      box-shadow:var(--shadow-soft);
+      overflow:hidden;
+    }
+
+    .shop-item{
+      padding:13px 13px 13px 17px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      min-height:132px;
+      height:auto;
+      position:relative;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+
+    .shop-item::before{
+      content:"";
+      position:absolute;
+      left:0;top:0;bottom:0;width:4px;
+      background:linear-gradient(180deg, var(--navy), var(--sky));
+    }
+
+    .shop-item h3{
+      font-family:"Montserrat",sans-serif;
+      font-size:16px;
+      line-height:1.22;
+      color:var(--navy);
+      margin-bottom:2px;
+      white-space:normal;
+      word-break:normal;
+      overflow-wrap:anywhere;
+    }
+
+    .shop-item p{
+      color:#50637c;
+      font-size:12px;
+      line-height:1.38;
+      white-space:normal;
+      word-break:normal;
+      overflow-wrap:anywhere;
+    }
+
+    .shop-item small{
+      display:block;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.3;
+      white-space:normal;
+      word-break:normal;
+      overflow-wrap:anywhere;
+    }
+
+    .item-top{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width:0;
+      flex:0 0 auto;
+    }
+
+    .item-line{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:8px;
+      flex-wrap:wrap;
+      min-width:0;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      padding:4px 8px;
+      border-radius:999px;
+      background:#eef4fc;
+      color:var(--navy);
+      font-size:9px;
+      letter-spacing:0.07em;
+      text-transform:uppercase;
+      font-weight:700;
+      border:1px solid #d6e2f3;
+      flex-shrink:0;
+    }
+
+    .buy-btn{
+      display:block;
+      width:100%;
+      min-height:34px;
+      height:auto;
+      padding:8px 10px;
+      font-size:10px;
+      font-weight:800;
+      line-height:1.25;
+      letter-spacing:0.035em;
+      text-transform:uppercase;
+      margin-top:auto;
+      white-space:normal;
+      overflow-wrap:anywhere;
+      word-break:normal;
+      flex:0 0 auto;
+    }
+
+    .buy-btn.primary{
+      background:linear-gradient(135deg, #123b72, #2c5e9d);
+      color:white;
+      border-color:transparent;
+    }
+
+    .bottom-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:24px;
+    }
+
+    .event-card,.achievement-card,.talent-card{
+      padding:14px;
+      line-height:1.55;
+      color:#50637d;
+    }
+
+    .achievement-card strong,.talent-card strong{
+      display:block;
+      font-family:"Montserrat",sans-serif;
+      color:var(--navy);
+      margin-bottom:6px;
+      font-size:17px;
+      line-height:1.3;
+    }
+
+    .achievement-card.locked{opacity:0.52}
+
+    .talent-card small{
+      display:block;
+      color:var(--muted);
+      line-height:1.45;
+      margin-top:8px;
+    }
+
+    .talent-btn{
+      width:100%;
+      margin-top:12px;
+      padding:11px 12px;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:0.04em;
+      text-transform:uppercase;
+    }
+
+    .floating-text{
+      position:fixed;
+      z-index:9999;
+      pointer-events:none;
+      font-family:"Montserrat",sans-serif;
+      color:var(--navy);
+      background:#ffffff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-soft);
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:16px;
+      animation:floatUp 0.82s ease-out forwards;
+    }
+
+    @keyframes floatUp{
+      0%{opacity:1;transform:translateY(0) scale(1)}
+      100%{opacity:0;transform:translateY(-44px) scale(1.05)}
+    }
+
+    @media (max-width:1320px){
+      .grid-top,.bottom-grid{grid-template-columns:1fr}
+      .section-head{flex-direction:column;align-items:flex-start}
+      .section-head p{text-align:left}
+    }
+
+    @media (max-width:1100px){
+      .two-col{grid-template-columns:1fr}
+    }
+
+    @media (max-width:860px){
+      .topbar-inner{
+        min-height:auto;
+        padding:16px 0;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .nav{gap:18px 24px;justify-content:flex-start}
+      .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .footer-stats{columns:1}
+    }
+
+    @media (max-width:560px){
+      .hero-inner,.wrapper,.topbar-inner{max-width:calc(100% - 20px)}
+      .stats{grid-template-columns:1fr}
+      .main-button{min-height:150px}
+      .main-button-title{font-size:28px}
+      .section-head h2{font-size:26px}
+    }
+
+    #unitsShop .shop-item,
+    #upgradesShop .shop-item{
+      flex-shrink:0 !important;
+      height:auto !important;
+      max-height:none !important;
+    }
+
+    #unitsShop .buy-btn,
+    #upgradesShop .buy-btn{
+      position:relative;
+      z-index:2;
+      flex-shrink:0 !important;
+    }
+
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div>
+          <div class="brand-title">PAS DESIGN 1.618</div>
+          <div class="brand-sub">Design intérieur • Suivi • Concept</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#" class="active">Agence</a>
+        <a href="#">Étapes projet</a>
+        <a href="#">Réalisations</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Agence de design </div>
+      <h1>Dans le batiment on est pas des glands!<span>Deux architectes, trop de suivis, pas assez de temps</span></h1>
+      <p>Rénover votre intérieur, envie d’une extension ou d’une nouvelle cuisine, besoin d’un agencement sur mesure ?
+
+      Vous souhaitez aménager votre boutique, vos bureaux, votre restaurant ?
+
+      Besoin d’un concept global, d’une identité visuelle ?
+      Découvrir notre processus</p>
+    </div>
+  </section>
+
+  <main class="wrapper">
+    <div class="breadcrumb">
+      <span>Accueil</span>
+      <span class="sep">/</span>
+      <span>Agence de design</span>
+    </div>
+
+    <div class="grid-top">
+      <section class="panel">
+        <div class="panel-inner">
+          <div class="section-head">
+            <div><h2>Vous avez un projet ?</h2></div>
+            <p>Accumule des points projet, recrute les corps de métier, sécurise tes concepts et mène les chantiers jusqu'à la livraison.</p>
+          </div>
+
+          <div class="campaign-box">
+            <div class="label-mini">Objectif actuel</div>
+            <div class="campaign-title" id="campaignName">Palier en cours</div>
+            <div class="progress-bar"><div class="progress-fill" id="campaignFill"></div></div>
+            <div class="progress-text" id="campaignText">0 / 1000</div>
+          </div>
+
+          <div class="boss-box">
+            <div class="label-mini">Dossier critique</div>
+            <div class="boss-title" id="bossName">Boss actuel : aucun blocage majeur</div>
+            <div class="progress-bar"><div class="progress-fill boss-fill" id="bossFill"></div></div>
+            <div class="progress-text" id="bossText">En attente d'une catastrophe parfaitement évitable</div>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><span>Points projet</span><strong id="credits">0</strong></div>
+            <div class="stat"><span>Production / sec</span><strong id="cps">0</strong></div>
+            <div class="stat"><span>Efficacité terrain</span><strong id="clickPower">1</strong></div>
+            <div class="stat"><span>Niveau de concept</span><strong id="techLevel">1</strong></div>
+            <div class="stat"><span>Chantiers validés</span><strong id="victories">0</strong></div>
+            <div class="stat"><span>Points méthode</span><strong id="talentPoints">0</strong></div>
+            <div class="stat"><span>Total produit</span><strong id="totalCredits">0</strong></div>
+            <div class="stat"><span>Événements</span><strong id="eventsCount">0</strong></div>
+            <div class="stat"><span>Blocages levés</span><strong id="bossesDefeated">0</strong></div>
+          </div>
+
+          <button class="main-button" id="mainClick">
+            <span class="main-button-title">Lancer une visite chantier</span>
+            <span class="main-button-sub">Chaque clic représente un appel, un relevé, un compte-rendu, un croquis, un détail à corriger, ou un client à rassurer.</span>
+          </button>
+
+          <div class="log" id="log">Connexion à l'agence... récupération des plans, des détails et des urgences du jour.</div>
+          <div class="footer-stats" id="unitsSummary"></div>
+
+          <div class="button-row">
+            <button class="secondary-btn" onclick="saveGame()">Sauvegarder</button>
+            <button class="secondary-btn" onclick="resetGame()">Réinitialiser</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-inner">
+          <div class="two-col">
+            <div>
+              <div class="section-head"><div><h2>Corps de métier</h2></div></div>
+              <div class="section-note">Les unités représentent les profils chantier, bureau et exécution. Plus tu recrutes, plus le coût du suivant grimpe.</div>
+              <div class="scroll-area" id="unitsShop"></div>
+            </div>
+
+            <div>
+              <div class="section-head"><div><h2>Augments</h2></div></div>
+              <div class="section-note">Blagounettes, outils de prod, références chantier et astuces de bureau. C'est là que la méthode devient dangereuse.</div>
+              <div class="scroll-area" id="upgradesShop"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="bottom-grid">
+      <section class="panel">
+        <div class="panel-inner">
+          <div class="section-head"><div><h2>Objectifs</h2></div></div>
+          <div class="scroll-area" id="achievementsList"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-inner">
+          <div class="section-head"><div><h2>Journal du projet</h2></div></div>
+          <div class="scroll-area" id="eventsList"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-inner">
+          <div class="section-head"><div><h2>Méthodologie</h2></div></div>
+          <div class="section-note" id="talentUnlockText">Débloque la méthodologie avancée après 3 chantiers validés.</div>
+          <div class="scroll-area" id="talentTree"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+<script>
+const unitDefs = [
+  { id:"stagiaire", name:"Le stagiaire releveur", baseCost:12, growth:1.15, cps:1, role:"Terrain", desc:"+1 / sec — prend les côtes, oublie parfois un poteau porteur." },
+  { id:"dede", name:"Dédé le plombier", baseCost:28, growth:1.16, cps:3, role:"Exécution", desc:"+3 / sec — passe quand il peut, mais quand il passe ça avance." },
+  { id:"jenmich", name:"Jen Mich' le carreleur", baseCost:60, growth:1.17, cps:7, role:"Exécution", desc:"+7 / sec — l'alignement des joints est une religion." },
+  { id:"gege", name:"Gégé l'électricien", baseCost:120, growth:1.18, cps:14, role:"Exécution", desc:"+14 / sec — sait toujours où il manque une prise." },
+  { id:"paulo", name:"Paulo le plaquiste", baseCost:240, growth:1.19, cps:27, role:"Exécution", desc:"+27 / sec — ferme tout juste avant la visite client." },
+  { id:"rene", name:"René le menuisier", baseCost:430, growth:1.20, cps:48, role:"Agencement", desc:"+48 / sec — sur-mesure, finitions, et phrases courtes." },
+  { id:"mireille", name:"Mireille la peintre", baseCost:780, growth:1.21, cps:88, role:"Finitions", desc:"+88 / sec — rattrape visuellement des drames bien réels." },
+  { id:"econo", name:"L'économiste du chantier", baseCost:1450, growth:1.22, cps:160, role:"Bureau", desc:"+160 / sec — parle en ratios, lots et arbitrages." },
+  { id:"jc", name:"JC le conducteur de travaux", baseCost:2600, growth:1.23, cps:290, role:"Suivi", desc:"+290 / sec — a toujours un raccourci et un contact qui dépanne." },
+  { id:"designer", name:"Le designer retail", baseCost:4800, growth:1.24, cps:520, role:"Concept", desc:"+520 / sec — transforme un brief flou en façade convaincante." },
+  { id:"architecte", name:"L'architecte d'intérieur", baseCost:9000, growth:1.26, cps:950, role:"Conception", desc:"+950 / sec — conçoit, arbitre, détaille et réexplique." },
+  { id:"binome", name:"Le binôme fondateur", baseCost:20000, growth:1.30, cps:2100, role:"Direction", desc:"+2100 / sec — pilotage global, concept, chantier, relation client et magie noire." }
+];
+
+const upgradeDefs = [
+  { id:"jcShortcuts", name:"Les raccourcis départemental de JC", baseCost:90, growth:1.50, effect:"globalMult", value:0.10, tag:"Terrain", desc:"+10% de production globale." },
+  { id:"rhoneLunch", name:"Pause midi au cote du Rhône Village", baseCost:180, growth:1.55, effect:"tech", value:1, tag:"Agence", desc:"+1 niveau de concept. Tout le monde revient curieusement plus lucide." },
+  { id:"autocad", name:"Nouvelle version d'AutoCAD", baseCost:360, growth:1.60, effect:"globalMult", value:0.16, tag:"Prod", desc:"+16% de production globale. À condition que tous les xrefs survivent." },
+  { id:"ral7016", name:"Le RAL 7016", baseCost:680, growth:1.65, effect:"click", value:2, tag:"Matière", desc:"+2 efficacité terrain. Parce qu'au fond tout finit par être anthracite." },
+  { id:"plu", name:"Article L 123-13-1 du PLU", baseCost:1150, growth:1.70, effect:"globalFlat", value:95, tag:"Réglementaire", desc:"+95 / sec plats. Personne n'a envie de rouvrir ce dossier." },
+  { id:"plansExe", name:"Plans EXE enfin récupérés", baseCost:1850, growth:1.75, effect:"eventResist", value:0.15, tag:"Exécution", desc:"Réduit les dégâts des événements négatifs." },
+  { id:"cctp", name:"CCTP blindé", baseCost:3000, growth:1.80, effect:"eventLuck", value:0.12, tag:"Dossier", desc:"Augmente les chances d'événements positifs." },
+  { id:"echantillons", name:"Matériauthèque bien fournie", baseCost:5000, growth:1.85, effect:"globalMult", value:0.23, tag:"Concept", desc:"+23% de production globale." },
+  { id:"chantierNote", name:"Compte-rendu de chantier millimétré", baseCost:8200, growth:1.95, effect:"memberMult", value:0.30, tag:"Suivi", desc:"+30% de production des unités." },
+  { id:"dtu", name:"Le DTU retrouvé au bon moment", baseCost:13000, growth:2.00, effect:"globalFlat", value:420, tag:"Technique", desc:"+420 / sec plats. Le genre de document qu'on relit en serrant les dents." },
+  { id:"devis", name:"Devis comparatifs impeccables", baseCost:24000, growth:2.15, effect:"bossDmg", value:0.30, tag:"Économie", desc:"+30% de dégâts contre les blocages." },
+  { id:"retailKit", name:"Concept magasin déjà calibré", baseCost:43000, growth:2.25, effect:"globalMult", value:0.55, tag:"Retail", desc:"+55% de production globale." }
+];
+
+const campaignSteps = [
+  { target:1000, name:"Premier rendez-vous client validé", reward:1 },
+  { target:4500, name:"Relevé existant complet", reward:1 },
+  { target:15000, name:"Concept boutique retenu", reward:2 },
+  { target:50000, name:"APS bouclé sans drame majeur", reward:2 },
+  { target:150000, name:"APD validé et budget encore vivant", reward:3 },
+  { target:500000, name:"DCE prêt à partir", reward:3 },
+  { target:1500000, name:"Consultation entreprises lancée", reward:4 },
+  { target:4500000, name:"Chantier magasin maîtrisé", reward:4 },
+  { target:12000000, name:"Livraison avec réserve limitée", reward:5 },
+  { target:32000000, name:"Agence totalement rodée", reward:6 }
+];
+
+const bossDefs = [
+  { id:"clientchange", name:"Le client change tout la veille", threshold:5000, hp:5200, reward:900 },
+  { id:"bureaucontrole", name:"Le bureau de contrôle tatillon", threshold:50000, hp:42000, reward:9000 },
+  { id:"retardmenuiserie", name:"Le mobilier sur mesure en retard", threshold:500000, hp:330000, reward:85000 },
+  { id:"reunion", name:"La réunion de chantier interminable", threshold:4500000, hp:2400000, reward:760000 },
+  { id:"coordination", name:"Le lot technique non coordonné", threshold:24000000, hp:12500000, reward:3500000 }
+];
+
+const achievementDefs = [
+  { id:"first", name:"Premier point projet", desc:"Générer ton premier point projet.", check:g => g.totalCredits >= 1 },
+  { id:"units10", name:"Équipe en place", desc:"Recruter 10 unités.", check:g => getTotalUnits(g) >= 10 },
+  { id:"units50", name:"Chantier bien rempli", desc:"Recruter 50 unités.", check:g => getTotalUnits(g) >= 50 },
+  { id:"dede20", name:"Dédé partout", desc:"Avoir 20 Dédé le plombier.", check:g => g.units.dede >= 20 },
+  { id:"jc10", name:"Le réseau de JC", desc:"Avoir 10 JC.", check:g => g.units.jc >= 10 },
+  { id:"architecte5", name:"Bureau saturé", desc:"Avoir 5 architectes d'intérieur.", check:g => g.units.architecte >= 5 },
+  { id:"binome1", name:"Pilotage global", desc:"Débloquer le binôme fondateur.", check:g => g.units.binome >= 1 },
+  { id:"cps1000", name:"Agence productive", desc:"Atteindre 1000 points / sec.", check:g => getCps(g) >= 1000 },
+  { id:"cps10000", name:"Machine à livrer", desc:"Atteindre 10000 points / sec.", check:g => getCps(g) >= 10000 },
+  { id:"boss1", name:"Premier blocage levé", desc:"Vaincre un boss.", check:g => g.bossesDefeated >= 1 },
+  { id:"victory5", name:"Cinq projets gérés", desc:"Valider 5 paliers.", check:g => g.victories >= 5 },
+  { id:"tech10", name:"Méthode bien huilée", desc:"Atteindre le niveau de concept 10.", check:g => g.techLevel >= 10 }
+];
+
+const talentDefs = [
+  { id:"brief", name:"Brief propre", tier:1, unlockVictory:3, cost:1, desc:"+10% de production globale.", effect:{ globalMult:0.10 } },
+  { id:"coordination", name:"Coordination lots", tier:2, unlockVictory:4, cost:1, desc:"+20% de production des unités.", effect:{ memberMult:0.20 } },
+  { id:"methode", name:"Méthode d'agence", tier:2, unlockVictory:4, cost:1, desc:"+15% de production globale.", effect:{ globalMult:0.15 } },
+  { id:"reserve", name:"Gestion des réserves", tier:2, unlockVictory:4, cost:1, desc:"-15% de pertes sur les événements négatifs.", effect:{ eventResist:0.15 } },
+  { id:"reseau", name:"Réseau d'entreprises", tier:2, unlockVictory:4, cost:1, desc:"+15% de chances d'événements favorables.", effect:{ eventLuck:0.15 } },
+  { id:"direction", name:"Direction de projet", tier:3, unlockVictory:5, cost:2, desc:"+35% de production globale.", effect:{ globalMult:0.35 } },
+  { id:"detail", name:"Détail d'exécution", tier:3, unlockVictory:5, cost:2, desc:"+35% de production des unités.", effect:{ memberMult:0.35 } },
+  { id:"negociation", name:"Négociation entreprises", tier:3, unlockVictory:5, cost:2, desc:"+30% de dégâts contre les boss.", effect:{ bossDmg:0.30 } },
+  { id:"signature", name:"Signature agence", tier:3, unlockVictory:5, cost:2, desc:"+25% de production globale.", effect:{ globalMult:0.25 } }
+];
+
+function makeDefaultState(){
+  const units = {}, unitCosts = {}, upgradeLevels = {}, upgradeCosts = {}, talents = {};
+  unitDefs.forEach(u => { units[u.id] = 0; unitCosts[u.id] = u.baseCost; });
+  upgradeDefs.forEach(u => { upgradeLevels[u.id] = 0; upgradeCosts[u.id] = u.baseCost; });
+  talentDefs.forEach(t => { talents[t.id] = 0; });
+
+  return {
+    credits:0,totalCredits:0,clickPower:1,techLevel:1,victories:0,currentCampaign:0,
+    bossesDefeated:0,randomEventsTriggered:0,units,unitCosts,upgradeLevels,upgradeCosts,
+    achievements:[],events:[],talentPoints:0,talents,activeBoss:null,
+    upgradeEffects:{globalMult:0,memberMult:0,globalFlat:0,bossDmg:0,eventLuck:0,eventResist:0}
+  };
+}
+
+let game = makeDefaultState();
+
+function formatNumber(num){ return Math.floor(num).toLocaleString("fr-FR"); }
+function setLog(text){ document.getElementById("log").textContent = text; }
+function getTotalUnits(g = game){ return Object.values(g.units).reduce((a,b) => a + b, 0); }
+
+function getTalentBonus(g, key){
+  let total = 0;
+  talentDefs.forEach(t => { if(g.talents[t.id] > 0 && t.effect[key]) total += t.effect[key]; });
+  return total;
+}
+function getUpgradeBonus(g, key){ return g.upgradeEffects[key] || 0; }
+function getUnitCps(unitId, g = game){
+  const def = unitDefs.find(u => u.id === unitId);
+  if(!def) return 0;
+  const mult = 1 + getUpgradeBonus(g, "memberMult") + getTalentBonus(g, "memberMult");
+  return def.cps * mult;
+}
+function getBaseCps(g = game){
+  let total = 0;
+  unitDefs.forEach(unit => { total += g.units[unit.id] * getUnitCps(unit.id, g); });
+  return total;
+}
+function getCps(g = game){
+  const globalMult = 1 + getUpgradeBonus(g, "globalMult") + getTalentBonus(g, "globalMult");
+  return Math.floor((getBaseCps(g) + getUpgradeBonus(g, "globalFlat")) * g.techLevel * globalMult);
+}
+function getBossDamagePerSecond(g = game){
+  return Math.max(1, Math.floor(getCps(g) * (0.04 + getUpgradeBonus(g, "bossDmg") + getTalentBonus(g, "bossDmg"))));
+}
+
+function createFloatingText(x, y, value){
+  const text = document.createElement("div");
+  text.className = "floating-text";
+  text.textContent = "+" + formatNumber(value);
+  text.style.left = x + "px";
+  text.style.top = y + "px";
+  document.body.appendChild(text);
+  setTimeout(() => text.remove(), 820);
+}
+
+function addCredits(amount){ game.credits += amount; game.totalCredits += amount; }
+
+function addEvent(text){
+  const now = new Date();
+  const time = now.toLocaleTimeString("fr-FR", { hour:"2-digit", minute:"2-digit", second:"2-digit" });
+  game.events.unshift("[" + time + "] " + text);
+  if(game.events.length > 45) game.events.pop();
+  renderEvents();
+}
+
+function unlockAchievement(id){
+  if(game.achievements.includes(id)) return;
+  game.achievements.push(id);
+  const def = achievementDefs.find(a => a.id === id);
+  if(def) addEvent("Objectif débloqué : " + def.name);
+  renderAchievements();
+}
+
+function checkAchievements(){
+  achievementDefs.forEach(a => {
+    if(!game.achievements.includes(a.id) && a.check(game)) unlockAchievement(a.id);
+  });
+}
+
+function renderEvents(){
+  const list = document.getElementById("eventsList");
+  list.innerHTML = "";
+  if(game.events.length === 0){
+    list.innerHTML = '<div class="event-card">Aucun événement à signaler. Situation anormalement calme.</div>';
+    return;
+  }
+  game.events.forEach(entry => {
+    const div = document.createElement("div");
+    div.className = "event-card";
+    div.textContent = entry;
+    list.appendChild(div);
+  });
+}
+
+function renderAchievements(){
+  const list = document.getElementById("achievementsList");
+  list.innerHTML = "";
+  achievementDefs.forEach(a => {
+    const unlocked = game.achievements.includes(a.id);
+    const div = document.createElement("div");
+    div.className = "achievement-card" + (unlocked ? "" : " locked");
+    div.innerHTML = "<strong>" + a.name + "</strong><p>" + a.desc + "</p>";
+    list.appendChild(div);
+  });
+}
+
+function renderUnitsShop(){
+  const container = document.getElementById("unitsShop");
+  container.innerHTML = "";
+  unitDefs.forEach(unit => {
+    const card = document.createElement("div");
+    card.className = "shop-item";
+    card.innerHTML = `
+      <div class="item-top">
+        <div class="item-line">
+          <h3>${unit.name}</h3>
+          <span class="tag">${unit.role}</span>
+        </div>
+        <p>${unit.desc}</p>
+        <small>Déployé : <span id="owned_${unit.id}">0</span></small>
+      </div>
+      <button class="buy-btn primary" id="btn_unit_${unit.id}">Recruter (${formatNumber(game.unitCosts[unit.id])})</button>
+    `;
+    container.appendChild(card);
+    card.querySelector("button").onclick = () => buyUnit(unit.id);
+  });
+}
+
+function renderUpgradesShop(){
+  const container = document.getElementById("upgradesShop");
+  container.innerHTML = "";
+  upgradeDefs.forEach(upg => {
+    const card = document.createElement("div");
+    card.className = "shop-item";
+    card.innerHTML = `
+      <div class="item-top">
+        <div class="item-line">
+          <h3>${upg.name}</h3>
+          <span class="tag">${upg.tag}</span>
+        </div>
+        <p>${upg.desc}</p>
+        <small>Niveau : <span id="lvl_${upg.id}">0</span></small>
+      </div>
+      <button class="buy-btn" id="btn_upg_${upg.id}">Appliquer (${formatNumber(game.upgradeCosts[upg.id])})</button>
+    `;
+    container.appendChild(card);
+    card.querySelector("button").onclick = () => buyUpgrade(upg.id);
+  });
+}
+
+function renderTalentTree(){
+  const container = document.getElementById("talentTree");
+  container.innerHTML = "";
+  const unlocked = game.victories >= 3;
+  document.getElementById("talentUnlockText").textContent = unlocked
+    ? "La méthodologie avancée est disponible. Chaque choix renforce la production ou la résistance du projet."
+    : "Débloque la méthodologie avancée après 3 chantiers validés.";
+
+  talentDefs.forEach(t => {
+    const canUnlock = game.victories >= t.unlockVictory;
+    const owned = game.talents[t.id] > 0;
+    const div = document.createElement("div");
+    div.className = "talent-card";
+    div.innerHTML = `
+      <strong>${t.name}</strong>
+      <p>${t.desc}</p>
+      <small>Palier ${t.tier} • Requiert ${t.unlockVictory} chantier(s) • Coût ${t.cost} point(s)</small>
+      <button class="talent-btn" ${(!canUnlock || owned || game.talentPoints < t.cost) ? "disabled" : ""}>${owned ? "Débloqué" : "Débloquer"}</button>
+    `;
+    div.querySelector("button").onclick = () => buyTalent(t.id);
+    container.appendChild(div);
+  });
+}
+
+function renderUnitsSummary(){
+  const el = document.getElementById("unitsSummary");
+  let html = "";
+  unitDefs.forEach(unit => { html += `${unit.name} : <span id="sum_${unit.id}">${game.units[unit.id]}</span><br>`; });
+  el.innerHTML = html;
+}
+
+function updateCampaignUI(){
+  const stepIndex = Math.min(game.currentCampaign, campaignSteps.length - 1);
+  const step = campaignSteps[stepIndex];
+  const prevTarget = stepIndex === 0 ? 0 : campaignSteps[stepIndex - 1].target;
+  const currentProgress = Math.max(0, game.totalCredits - prevTarget);
+  const needed = step.target - prevTarget;
+  const pct = Math.max(0, Math.min(100, (currentProgress / needed) * 100));
+
+  document.getElementById("campaignName").textContent = step.name;
+  document.getElementById("campaignFill").style.width = pct + "%";
+  document.getElementById("campaignText").textContent = formatNumber(currentProgress) + " / " + formatNumber(needed) + " points projet";
+}
+
+function updateBossUI(){
+  const nameEl = document.getElementById("bossName");
+  const fillEl = document.getElementById("bossFill");
+  const textEl = document.getElementById("bossText");
+
+  if(!game.activeBoss){
+    nameEl.textContent = "Boss actuel : aucun blocage majeur";
+    fillEl.style.width = "0%";
+    textEl.textContent = "En attente d'une catastrophe parfaitement évitable";
+    return;
+  }
+
+  const pct = Math.max(0, Math.min(100, (game.activeBoss.hp / game.activeBoss.maxHp) * 100));
+  nameEl.textContent = "Boss actuel : " + game.activeBoss.name;
+  fillEl.style.width = pct + "%";
+  textEl.textContent = formatNumber(game.activeBoss.hp) + " / " + formatNumber(game.activeBoss.maxHp) + " points de blocage";
+}
+
+function updateButtons(){
+  unitDefs.forEach(unit => {
+    const btn = document.getElementById("btn_unit_" + unit.id);
+    if(btn){
+      btn.disabled = game.credits < game.unitCosts[unit.id];
+      btn.textContent = "Recruter (" + formatNumber(game.unitCosts[unit.id]) + ")";
+    }
+  });
+
+  upgradeDefs.forEach(upg => {
+    const btn = document.getElementById("btn_upg_" + upg.id);
+    if(btn){
+      btn.disabled = game.credits < game.upgradeCosts[upg.id];
+      btn.textContent = "Appliquer (" + formatNumber(game.upgradeCosts[upg.id]) + ")";
+    }
+  });
+}
+
+function updateSummaryNumbers(){
+  document.getElementById("credits").textContent = formatNumber(game.credits);
+  document.getElementById("cps").textContent = formatNumber(getCps());
+  document.getElementById("clickPower").textContent = formatNumber(game.clickPower);
+  document.getElementById("techLevel").textContent = formatNumber(game.techLevel);
+  document.getElementById("victories").textContent = formatNumber(game.victories);
+  document.getElementById("talentPoints").textContent = formatNumber(game.talentPoints);
+  document.getElementById("totalCredits").textContent = formatNumber(game.totalCredits);
+  document.getElementById("eventsCount").textContent = formatNumber(game.randomEventsTriggered);
+  document.getElementById("bossesDefeated").textContent = formatNumber(game.bossesDefeated);
+
+  unitDefs.forEach(unit => {
+    const owned = document.getElementById("owned_" + unit.id);
+    const sum = document.getElementById("sum_" + unit.id);
+    if(owned) owned.textContent = game.units[unit.id];
+    if(sum) sum.textContent = game.units[unit.id];
+  });
+
+  upgradeDefs.forEach(upg => {
+    const lvl = document.getElementById("lvl_" + upg.id);
+    if(lvl) lvl.textContent = game.upgradeLevels[upg.id];
+  });
+}
+
+function updateUI(){
+  updateSummaryNumbers();
+  updateButtons();
+  updateCampaignUI();
+  updateBossUI();
+  renderAchievements();
+  renderEvents();
+  renderTalentTree();
+  checkAchievements();
+  checkCampaignProgress();
+  checkBossSpawn();
+}
+
+function buyUnit(id){
+  const def = unitDefs.find(u => u.id === id);
+  if(!def) return;
+  const cost = game.unitCosts[id];
+
+  if(game.credits < cost){
+    setLog("Points projet insuffisants. Il va falloir encore faire quelques visites et relances.");
+    return;
+  }
+
+  game.credits -= cost;
+  game.units[id]++;
+  game.unitCosts[id] = Math.floor(game.unitCosts[id] * def.growth);
+  setLog(def.name + " rejoint l'opération.");
+  addEvent(def.name + " est affecté au projet.");
+  updateUI();
+  saveGame(false);
+}
+
+function applyUpgradeEffect(def){
+  if(def.effect === "click") game.clickPower += def.value;
+  if(def.effect === "tech") game.techLevel += def.value;
+  if(def.effect === "globalMult") game.upgradeEffects.globalMult += def.value;
+  if(def.effect === "memberMult") game.upgradeEffects.memberMult += def.value;
+  if(def.effect === "globalFlat") game.upgradeEffects.globalFlat += def.value;
+  if(def.effect === "bossDmg") game.upgradeEffects.bossDmg += def.value;
+  if(def.effect === "eventLuck") game.upgradeEffects.eventLuck += def.value;
+  if(def.effect === "eventResist") game.upgradeEffects.eventResist += def.value;
+}
+
+function buyUpgrade(id){
+  const def = upgradeDefs.find(u => u.id === id);
+  if(!def) return;
+  const cost = game.upgradeCosts[id];
+
+  if(game.credits < cost){
+    setLog("Budget de progression insuffisant. La ligne 'divers' ne suffira pas.");
+    return;
+  }
+
+  game.credits -= cost;
+  game.upgradeLevels[id]++;
+  applyUpgradeEffect(def);
+  game.upgradeCosts[id] = Math.floor(game.upgradeCosts[id] * def.growth);
+  setLog(def.name + " est désormais intégré à la méthode.");
+  addEvent("Augment appliqué : " + def.name);
+  updateUI();
+  saveGame(false);
+}
+
+function buyTalent(id){
+  const def = talentDefs.find(t => t.id === id);
+  if(!def) return;
+  if(game.victories < def.unlockVictory) return;
+  if(game.talents[id] > 0) return;
+  if(game.talentPoints < def.cost) return;
+
+  game.talentPoints -= def.cost;
+  game.talents[id] = 1;
+  setLog("Méthodologie débloquée : " + def.name);
+  addEvent("Méthode validée : " + def.name);
+  updateUI();
+  saveGame(false);
+}
+
+function checkCampaignProgress(){
+  while(game.currentCampaign < campaignSteps.length && game.totalCredits >= campaignSteps[game.currentCampaign].target){
+    const step = campaignSteps[game.currentCampaign];
+    game.currentCampaign++;
+    game.victories++;
+    game.talentPoints += step.reward;
+    setLog("Palier validé : " + step.name);
+    addEvent("Projet avancé : " + step.name + " // +" + step.reward + " point(s) méthode");
+  }
+}
+
+function checkBossSpawn(){
+  if(game.activeBoss) return;
+
+  for(let i = 0; i < bossDefs.length; i++){
+    const boss = bossDefs[i];
+    if(game.totalCredits >= boss.threshold && game.bossesDefeated <= i){
+      game.activeBoss = { id:boss.id, name:boss.name, hp:boss.hp, maxHp:boss.hp, reward:boss.reward };
+      addEvent("Blocage détecté : " + boss.name);
+      setLog("Un nouveau point critique apparaît : " + boss.name);
+      break;
+    }
+  }
+}
+
+function tickBoss(){
+  if(!game.activeBoss) return;
+  const damage = getBossDamagePerSecond() / 10;
+  game.activeBoss.hp -= damage;
+
+  if(game.activeBoss.hp <= 0){
+    const reward = game.activeBoss.reward;
+    addCredits(reward);
+    game.bossesDefeated++;
+    addEvent("Blocage levé : " + game.activeBoss.name + " // +" + formatNumber(reward) + " points projet");
+    setLog("Le dossier critique est sécurisé.");
+    game.activeBoss = null;
+    updateUI();
+  }
+}
+
+function randomEventTick(){
+  const baseChance = 0.08;
+  const luck = getUpgradeBonus(game, "eventLuck") + getTalentBonus(game, "eventLuck");
+  const chance = baseChance + luck;
+  if(Math.random() > chance) return;
+
+  game.randomEventsTriggered++;
+
+  const events = [
+    () => {
+      const gain = Math.max(50, Math.floor(getCps() * 8));
+      addCredits(gain);
+      addEvent("Un artisan rappelle avant même la relance // +" + formatNumber(gain) + " points projet");
+      setLog("Réactivité exceptionnelle détectée.");
+    },
+    () => {
+      game.clickPower += 1;
+      addEvent("Le client valide enfin un principe // +1 efficacité terrain");
+      setLog("Clarté subite du brief.");
+    },
+    () => {
+      game.talentPoints += 1;
+      addEvent("Un détail bien pensé fluidifie toute l'opération // +1 point méthode");
+      setLog("Bonne décision structurelle.");
+    },
+    () => {
+      const gain = Math.max(100, Math.floor(getCps() * 14));
+      addCredits(gain);
+      addEvent("Le concept magasin est parfaitement reçu // +" + formatNumber(gain) + " points projet");
+      setLog("Présentation client efficace.");
+    },
+    () => {
+      game.techLevel += 1;
+      addEvent("Une réunion d'agence débouche sur une vraie solution // +1 niveau de concept");
+      setLog("Alignement rare mais réel.");
+    },
+    () => {
+      const resist = getTalentBonus(game, "eventResist") + getUpgradeBonus(game, "eventResist");
+      const lossFactor = Math.max(0.03, 0.13 - resist);
+      const loss = Math.floor(game.credits * lossFactor);
+      game.credits = Math.max(0, game.credits - loss);
+      addEvent("Le devis d'un lot revient complètement à côté // -" + formatNumber(loss) + " points projet");
+      setLog("Arbitrage budgétaire immédiat.");
+    },
+    () => {
+      const candidates = unitDefs.filter(u => game.units[u.id] > 0);
+      if(candidates.length === 0){
+        addEvent("Une absence aurait posé problème, mais personne n'était encore affecté.");
+        return;
+      }
+      const pick = candidates[Math.floor(Math.random() * candidates.length)];
+      game.units[pick.id] = Math.max(0, game.units[pick.id] - 1);
+      addEvent("Un intervenant décale sa venue sans prévenir // -1 " + pick.name);
+      setLog("Replanification en cours.");
+    },
+    () => {
+      const loss = Math.floor(Math.max(20, getCps() * 3));
+      game.credits = Math.max(0, game.credits - loss);
+      addEvent("Le compte-rendu du chantier ressort avec cinq sujets de plus // -" + formatNumber(loss) + " points projet");
+      setLog("Le chantier parle de lui-même.");
+    },
+    () => {
+      const gain = Math.max(120, Math.floor(getCps() * 10));
+      addCredits(gain);
+      addEvent("Les plans d'exécution sont finalement cohérents // +" + formatNumber(gain) + " points projet");
+      setLog("Coordination momentanément sous contrôle.");
+    }
+  ];
+
+  const event = events[Math.floor(Math.random() * events.length)];
+  event();
+  updateUI();
+}
+
+function passiveIncomeTick(){ addCredits(getCps() / 10); }
+
+document.getElementById("mainClick").addEventListener("click", (e) => {
+  const gain = game.clickPower * game.techLevel;
+  addCredits(gain);
+  createFloatingText(e.clientX, e.clientY, gain);
+
+  const logs = [
+    "Visite chantier effectuée. Deux points réglés, trois nouveaux apparaissent.",
+    "Le compte-rendu part. Personne ne répond tout de suite.",
+    "Le détail envoyé à l'entreprise était finalement utile.",
+    "Le relevé est complété avec une cote qui manquait.",
+    "Le client pose une question déjà traitée en page 4."
+  ];
+
+  setLog(logs[Math.floor(Math.random() * logs.length)]);
+  updateUI();
+});
+
+function saveGame(showMessage = true){
+  localStorage.setItem("agenceChantierClickerV1", JSON.stringify(game));
+  if(showMessage) setLog("Sauvegarde effectuée. L'agence peut reprendre demain sans refaire tout le brief.");
+}
+
+function loadGame(){
+  const save = localStorage.getItem("agenceChantierClickerV1");
+  if(!save){
+    addEvent("Nouvelle opération de conception et suivi lancée.");
+    return;
+  }
+
+  try{
+    const parsed = JSON.parse(save);
+    const fresh = makeDefaultState();
+
+    game = {
+      ...fresh,
+      ...parsed,
+      units:{ ...fresh.units, ...(parsed.units || {}) },
+      unitCosts:{ ...fresh.unitCosts, ...(parsed.unitCosts || {}) },
+      upgradeLevels:{ ...fresh.upgradeLevels, ...(parsed.upgradeLevels || {}) },
+      upgradeCosts:{ ...fresh.upgradeCosts, ...(parsed.upgradeCosts || {}) },
+      achievements:parsed.achievements || [],
+      events:parsed.events || [],
+      talents:{ ...fresh.talents, ...(parsed.talents || {}) },
+      upgradeEffects:{ ...fresh.upgradeEffects, ...(parsed.upgradeEffects || {}) }
+    };
+
+    setLog("Sauvegarde chargée.");
+  }catch(err){
+    game = makeDefaultState();
+    addEvent("Erreur de chargement. Le projet repart de zéro avec beaucoup d'assurance.");
+  }
+}
+
+function resetGame(){
+  const ok = confirm("Tu veux vraiment réinitialiser cette version agence / chantier ?");
+  if(!ok) return;
+  localStorage.removeItem("agenceChantierClickerV1");
+  game = makeDefaultState();
+  renderUnitsShop();
+  renderUpgradesShop();
+  renderUnitsSummary();
+  addEvent("Nouvelle campagne relancée.");
+  setLog("Réinitialisation terminée.");
+  updateUI();
+}
+
+renderUnitsShop();
+renderUpgradesShop();
+renderUnitsSummary();
+loadGame();
+updateUI();
+
+setInterval(() => { passiveIncomeTick(); tickBoss(); updateUI(); }, 100);
+setInterval(() => { randomEventTick(); }, 12000);
+setInterval(() => { saveGame(false); }, 5000);
+</script>
+</body>
+</html>
